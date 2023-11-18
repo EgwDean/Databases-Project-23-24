@@ -3,7 +3,7 @@ CREATE DATABASE etaireia_aksiologisis;
 USE etaireia_aksiologisis;
 
 CREATE TABLE IF NOT EXISTS etaireia(
-	AFM CHAR(9) NOT NULL,
+    AFM CHAR(9) NOT NULL,
     DOY VARCHAR(30) DEFAULT 'unknown' NOT NULL,
     name VARCHAR(35) DEFAULT 'unknown' NOT NULL,
     tel VARCHAR(10) NOT NULL,
@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS etaireia(
     num INT(11) DEFAULT '0' NOT NULL,
     city VARCHAR(45) DEFAULT 'unknown' NOT NULL,
     country VARCHAR(15) DEFAULT 'unknown' NOT NULL,
-	PRIMARY KEY(AFM),
-	UNIQUE(tel)
+    PRIMARY KEY(AFM),
+    UNIQUE(tel)
     );
     
 CREATE TABLE IF NOT EXISTS user(
@@ -32,22 +32,22 @@ CREATE TABLE IF NOT EXISTS evaluator(
     firm CHAR(9) NOT NULL,
     PRIMARY KEY(username),
     CONSTRAINT EVALUSER FOREIGN KEY(username) REFERENCES user(username) 
-	ON UPDATE CASCADE ON DELETE CASCADE,
+    ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT EVALFIRM FOREIGN KEY(firm) REFERENCES etaireia(AFM)
     ON UPDATE CASCADE ON DELETE CASCADE
     );
     
 CREATE TABLE IF NOT EXISTS employee(
-	username VARCHAR(30) NOT NULL,
+    username VARCHAR(30) NOT NULL,
     bio TEXT NOT NULL,
     sistatikes VARCHAR(35) DEFAULT 'unknown',
     certificates VARCHAR(35) DEFAULT 'unknown',
     PRIMARY KEY(username),
     CONSTRAINT EMPLUSER FOREIGN KEY(username) REFERENCES user(username) 
-	ON UPDATE CASCADE ON DELETE CASCADE
+    ON UPDATE CASCADE ON DELETE CASCADE
     );
 CREATE TABLE IF NOT EXISTS languages(
-	candid VARCHAR(30) NOT NULL,
+    candid VARCHAR(30) NOT NULL,
     lang SET('EN', 'FR', 'SP', 'GE', 'CH', 'GR') NOT NULL,
     PRIMARY KEY(candid, lang),
     CONSTRAINT LANGEMPL FOREIGN KEY(candid) REFERENCES employee(username)
@@ -55,17 +55,17 @@ CREATE TABLE IF NOT EXISTS languages(
     );
     
 CREATE TABLE IF NOT EXISTS project(
-	candid VARCHAR(30) NOT NULL,
+    candid VARCHAR(30) NOT NULL,
     num TINYINT(4) NOT NULL,
     descr TEXT NOT NULL,
     url VARCHAR(60) DEFAULT 'unknown' NOT NULL,
     PRIMARY KEY(candid, num),
     CONSTRAINT PROJEMPL FOREIGN KEY(candid) REFERENCES employee(username)
-	ON UPDATE CASCADE ON DELETE CASCADE
+    ON UPDATE CASCADE ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS job(
-	id INT(11) AUTO_INCREMENT NOT NULL,
+    id INT(11) AUTO_INCREMENT NOT NULL,
     start_date DATE DEFAULT '1900-01-01' NOT NULL,
     salary FLOAT DEFAULT '0' NOT NULL,
     pposition VARCHAR(60) DEFAULT 'unknown' NOT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS job(
     );
     
 CREATE TABLE IF NOT EXISTS applies(
-	cand_username VARCHAR(30) NOT NULL,
+    cand_username VARCHAR(30) NOT NULL,
     job_id INT(11) NOT NULL,
     PRIMARY KEY(cand_username, job_id),
     CONSTRAINT APPEMPL FOREIGN KEY(cand_username) REFERENCES employee(username)
@@ -89,14 +89,14 @@ CREATE TABLE IF NOT EXISTS applies(
     );
     
 CREATE TABLE IF NOT EXISTS degree(
-	titlos VARCHAR(150) NOT NULL,
+    titlos VARCHAR(150) NOT NULL,
     idryma VARCHAR(140) NOT NULL,
     bathmida ENUM('BSc', 'MSc', 'PhD') NOT NULL,
     PRIMARY KEY(titlos, idryma)
     );
     
     CREATE TABLE IF NOT EXISTS has_degree(
-	degr_title VARCHAR(150) NOT NULL,
+    degr_title VARCHAR(150) NOT NULL,
     degr_idryma VARCHAR(140) NOT NULL,
     cand_usrname VARCHAR(30) NOT NULL,
     etos YEAR(4) DEFAULT '0000' NOT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS degree(
     );
     
 CREATE TABLE IF NOT EXISTS subject(
-	title VARCHAR(36) NOT NULL,
+    title VARCHAR(36) NOT NULL,
     descr TINYTEXT NOT NULL,
     belongs_to VARCHAR(36),
     PRIMARY KEY(title),
