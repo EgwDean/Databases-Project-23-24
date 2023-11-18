@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS job(
     pposition VARCHAR(60) DEFAULT 'unknown' NOT NULL,
     edra VARCHAR(60) DEFAULT 'unknown' NOT NULL,
     evaluator VARCHAR(30) NOT NULL,
-    announce_date DATETIME DEFAULT '1900-01-01' NOT NULL,
+    announce_date DATETIME DEFAULT '1900-01-01 00-00-00' NOT NULL,
     submission_date DATE DEFAULT '1900-01-01' NOT NULL,
     PRIMARY KEY(id),
     CONSTRAINT JOBEVAL FOREIGN KEY(evaluator) REFERENCES evaluator(username)
