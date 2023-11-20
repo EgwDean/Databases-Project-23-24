@@ -1,13 +1,12 @@
 USE etaireia_aksiologisis;
 
-INSERT INTO etaireia (AFM, DOY, nname, tel, street, num, city, country)
+INSERT INTO etaireia (AFM, DOY, name, tel, street, num, city, country)
 VALUES
-('784512369', 'PATRAS', 'ConnectWave Communications', '2610123456', '	Androutsou', 58, 'Patras', 'Greece'),
+('784512369', 'PATRAS', 'ConnectWave Communications', '2610123456', 'Androutsou', 58, 'Patras', 'Greece'),
 ('630974182', 'THEBES', 'SwiftLink TeleSystems', '2262032550', 'Amfionos', 15, 'Thebes', 'Greece'),
 ('215689347', 'THESSALONIKI', 'NexusNet Telecom Technologies', '2310123456', 'Egnatia', 88, 'Thessaloniki', 'Greece');
 
-
-INSERT INTO uuser (username, ppassword, nname, lastname, reg_date, email)
+INSERT INTO user (username, password, name, lastname, reg_date, email)
 VALUES
 ('emily_johnson84', 'duyfgwuef78', 'Emily', 'Johnson', '2023-03-13 14:00:00', 'emily_johnson84@gmail.com'),
 ('alex_smithson22', 'hduwdh6786', 'Alex', 'Smithson', '2023-04-26 18:45:00', 'alexsmithson@gmail.com'),
@@ -33,14 +32,16 @@ VALUES
 ('ethan_miller64', 4, '215689347');
 
 
+
 INSERT INTO employee (username, bio, sistatikes, certificates)
 VALUES
-('lily_wilson78', 'A proficient network engineer adept at navigating the intricate tapestry of connectivity. Dedicated to optimizing network efficiency and resolving complexities.', 'Telecommunications Engineering', 'Bachelor of Computer Science'),
+('lily_wilson78', 'A proficient network engineer adept at navigating the intricate tapestry of connectivity. Dedicated to optimizing network efficiency and resolving complexities.', 'Network Engineering', 'Bachelor of Computer Science'),
 ('noah_thompson55', 'An astute data analyst adept at deciphering vast datasets to extract pivotal insights shaping the telecommunications landscape. Proficient in data analytics.', 'Data analysis', 'Master of Data Science'),
 ('ava_harrison86', 'A dedicated customer support specialist adept at bridging the technical intricacies of telecommunications with user-friendly assistance.', 'Customer Relationship Management', 'Bachelor of Business Administration'),
 ('james_mitchell71', 'An unwavering cybersecurity specialist dedicated to fortifying digital landscapes against evolving threats.', 'Master of Network Security', 'Bachelor of Computer Science'),
-('sophia_baker79', 'A seasoned telecommunications engineer adept at architecting robust and scalable network infrastructures.', 'Bachelor of Telecommunications Engineering'),
+('sophia_baker79', 'A seasoned telecommunications engineer adept at architecting robust and scalable network infrastructures.', 'Telecommunications Engineering', 'Bachelor of Telecommunications Engineering'),
 ('daniel_parker88', 'A forward-thinking technology strategist specializing in telecommunications. Proficient in devising strategic roadmaps that align with organizational goals.', 'Bachelor of Technology Innovation and Strategy', 'Digital marketing');
+
 
 
 INSERT INTO languages (candid, lang)
@@ -49,6 +50,7 @@ VALUES
 ('james_mitchell71', 'FR'),
 ('james_mitchell71', 'SP'),
 ('daniel_parker88', 'GE');
+
 
 
 INSERT INTO project (candid, num, descr, url)
@@ -60,6 +62,7 @@ VALUES
 ('sophia_baker79', 1, 'NetArchitect: Designing Resilient Network Infrastructures', 'https://www.infranet.com'),
 ('daniel_parker88', 1, 'TechVista: Charting Future Telecom Strategies', 'https://www.telstrategist.com'),
 ('lily_wilson78', 2, 'DataFlow Nexus: Optimizing Network Bandwidth and Stability', 'https://www.dataflownexus.com');
+
 
 
 INSERT INTO job (id, start_date, salary, pposition, edra, evaluator, announce_date, submission_date)
@@ -74,6 +77,7 @@ VALUES
 (NULL, '2023-08-30', 110000, 'Software Engineer', 'Toronto', 'ethan_miller64', '2023-08-01 22:45:00', '2023-08-31');
 
 
+
 INSERT INTO applies (cand_username, job_id)
 VALUES
 ('lily_wilson78', 1),
@@ -82,6 +86,7 @@ VALUES
 ('james_mitchell71', 4),
 ('sophia_baker79', 5),
 ('daniel_parker88', 6);
+
 
 
 INSERT INTO degree (titlos, idryma, bathmida)
@@ -94,12 +99,14 @@ VALUES
 ('Bachelor of Technology Innovation and Strategy', 'Kapodistrian University of Athens', 'BSc');
 
 
+
 INSERT INTO has_degree (degr_title, degr_idryma, cand_usrname, etos, grade)
 VALUES
 ('Bachelor of Computer Science', 'University of Patras', 'lily_wilson78', 2020, 8),
 ('Master of Data Science', 'University of Patras', 'noah_thompson55', 2021, 7),
 ('Master of Business Administration', 'University of Thessaloniki', 'ava_harrison86', 2019, 8.5),
 ('Master of Network Security', 'Aristotle University of Thessaloniki', 'james_mitchell71', 2017, 6.5);
+
 
 
 INSERT INTO ssubject (title, descr, belongs_to)
@@ -112,6 +119,7 @@ VALUES
 ('Incident Response and Digital Forensics', 'Investigating procedures for incident handling, digital evidence collection, and forensic analysis to respond effectively to cybersecurity incidents.', NULL),
 ('Digital Marketing Strategies and Analytics', 'Analyzing digital marketing strategies, tools, and analytics methods to optimize campaigns and drive effective online marketing initiatives.', NULL),
 ('Vulnerability Assessment and Risk Management', 'Assessing vulnerabilities in systems, networks, and applications while managing and mitigating risks associated with potential security threats.', 'Ethical Hacking and Penetration Testing');
+
 
 
 INSERT INTO requires (job_id, subject_title)
