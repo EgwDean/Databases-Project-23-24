@@ -58,7 +58,7 @@ VALUES
 
 INSERT INTO job (id, start_date, salary, pposition, edra, evaluator, announce_date, submission_date)
 VALUES
-(NULL, '2023-01-15', 80000, 'Software Engineer', 'Metropolis', 'maria123', '2023-01-01 08:30:00', '2023-01-31'),
+(NULL, '2023-01-15', 80000, 'Software Engineer', 'Metropolis', 'maria123', '2023-01-01 08:30:00', '2023-01-31'),          //job id can't be NULL!! It is defined as AUTO_INCREMENT NOT NULL
 (NULL, '2023-02-20', 90000, 'Data Analyst', 'Cityville', 'maria123', '2023-02-01 10:45:00', '2023-02-28'),
 (NULL, '2023-03-25', 100000, 'Project Manager', 'Innovation City', 'giorgospet', '2023-03-01 12:15:00', '2023-03-31'),
 (NULL, '2023-04-30', 75000, 'Graphic Designer', 'Techland', 'giorgospet', '2023-04-01 14:00:00', '2023-04-30'),
