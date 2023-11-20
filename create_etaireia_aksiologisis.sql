@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS job(
 	id INT(11) AUTO_INCREMENT NOT NULL,
     start_date DATE DEFAULT '1900-01-01' NOT NULL,
     salary FLOAT DEFAULT '0' NOT NULL,
-    pposition VARCHAR(60) DEFAULT 'unknown' NOT NULL,
+    position VARCHAR(60) DEFAULT 'unknown' NOT NULL,
     edra VARCHAR(60) DEFAULT 'unknown' NOT NULL,
     evaluator VARCHAR(30) NOT NULL,
     announce_date DATETIME DEFAULT '1900-01-01 00-00-00' NOT NULL,
