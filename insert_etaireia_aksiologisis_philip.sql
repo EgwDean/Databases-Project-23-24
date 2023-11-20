@@ -1,6 +1,6 @@
 USE etaireia_aksiologisis;
 
-INSERT INTO user VALUES
+INSERT INTO user VALUES                                                                      //uuser
 ('user1','gsjhahgsa','Giorgos','Papadopoulos','2023-12-30 07:27:00','us1@email.com'),
 ('user2','gsjhaadqw','Kostas','Papadopoulos','2023-09-27 09:29:00','us2@email.com'),
 ('user3','gswwwgsa','Roula','Gogka','2023-04-21 11:17:00','us3@email.com'),
@@ -80,7 +80,7 @@ INSERT INTO has_degree VALUES
 ('Master of Computer Engineering', 'University of Patras', 'user9', 2020, 7.5),
 ('PhD of Computer Architecture', 'Harvard University', 'user12', 2017, 9);
 
-INSERT INTO subject VALUES
+INSERT INTO subject VALUES                                                                                                      //ssubject
 ('Micro Electronics', 'Introduction to the study and manufacture of very small electronic designs and components', NULL),
 ('Linear Algebra', 'Introduction to vector spaces and linear transformations', NULL),
 ('Computer Architecture', 'Hardware', NULL),
@@ -95,7 +95,7 @@ INSERT INTO requires VALUES
 (2, 'Linear Algebra'),
 (3, 'Computer Architecture'),
 (4, 'Logic Design'),
-(5, 'Signal and Systems'),
+(5, 'Signal and Systems'),                
 (6, 'Matrices'),
 (7, 'Programming'),
 (8, 'C Programming');
