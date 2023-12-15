@@ -1,4 +1,4 @@
-DROP DATABASE etaireia_aksiologisis;
+DROP DATABASE IF EXISTS etaireia_aksiologisis;
 CREATE DATABASE etaireia_aksiologisis;
 USE etaireia_aksiologisis;
 
