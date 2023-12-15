@@ -1,4 +1,4 @@
-USE etaireia_aksiologisis;
+use etaireia_aksiologisis;
 
 INSERT INTO etaireia (AFM, DOY, name, tel, street, num, city, country)
 VALUES
@@ -111,26 +111,26 @@ VALUES
 
 INSERT INTO project (candid, num, descr, url)
 VALUES
-('anastasis9090', 1, 'E-commerce Website', 'https://www.ecomweb123.com'),
-('tzinaaa', 1, 'Blog Platform', 'https://www.bigblog1.com'),
-('michalis123', 1, 'Data Analysis Tool', 'https://www.dataanalysisnow.com'),
-('manos1978', 1, 'Project Management System', 'https://www.proj.man.com'),
-('tzinaaa', 2, 'Brand Identity Redesign', 'https://www.edegign.name.com'),
-('emma_ross', 1, 'Network Infrastructure Upgrade', 'https://www.infranet12.com'),
-('anastasis9090', 2, 'Digital Marketing Campaign', 'https://www.marketing123.com'),
-('lily_wilson78', 1, 'OptiLink: Enhancing Network Efficiency and Scalability', 'https://www.optilink.com'),
-('noah_thompson55', 1, 'DataSift: Unraveling Insights to Shape Telecom Trends', 'https://www.datasift.com'),
-('ava_harrison86', 1, 'ClientConnect: Elevating Customer Interaction Experience', 'https://www.clientconnect.com'),
-('james_mitchell71', 1, 'CyberShield: Fortifying Telecom Networks Against Threats', 'https://www.cybershield.com'),
-('sophia_baker79', 1, 'NetArchitect: Designing Resilient Network Infrastructures', 'https://www.infranet.com'),
-('daniel_parker88', 1, 'TechVista: Charting Future Telecom Strategies', 'https://www.telstrategist.com'),
-('lily_wilson78', 2, 'DataFlow Nexus: Optimizing Network Bandwidth and Stability', 'https://www.dataflownexus.com'),
-('user7', 1, '2s Numbers Multiplier', 'https://www.arduino/toge.com'),
-('user8', 1, '2s Numbers Adder', 'https://www.arduino/egot.com'),
-('user9', 2, 'DFA to NFA', 'https://www.doityourselfNfaDfa.com'),
-('user10', 1, 'CSV reader', 'https://www.CsvREAD/toge.com'),
-('user11', 1, 'Sound Redesign', 'https://www.flstudio/toge.com'),
-('user12', 1, 'CAD simulator', 'https://www.VerilogLover/toge.com');
+('anastasis9090', 0, 'E-commerce Website', 'https://www.ecomweb123.com'),
+('tzinaaa', 0, 'Blog Platform', 'https://www.bigblog1.com'),
+('michalis123', 0, 'Data Analysis Tool', 'https://www.dataanalysisnow.com'),
+('manos1978', 0, 'Project Management System', 'https://www.proj.man.com'),
+('tzinaaa', 0, 'Brand Identity Redesign', 'https://www.edegign.name.com'),
+('emma_ross', 0, 'Network Infrastructure Upgrade', 'https://www.infranet12.com'),
+('anastasis9090', 0, 'Digital Marketing Campaign', 'https://www.marketing123.com'),
+('lily_wilson78', 0, 'OptiLink: Enhancing Network Efficiency and Scalability', 'https://www.optilink.com'),
+('noah_thompson55', 0, 'DataSift: Unraveling Insights to Shape Telecom Trends', 'https://www.datasift.com'),
+('ava_harrison86', 0, 'ClientConnect: Elevating Customer Interaction Experience', 'https://www.clientconnect.com'),
+('james_mitchell71', 0, 'CyberShield: Fortifying Telecom Networks Against Threats', 'https://www.cybershield.com'),
+('sophia_baker79', 0, 'NetArchitect: Designing Resilient Network Infrastructures', 'https://www.infranet.com'),
+('daniel_parker88', 0, 'TechVista: Charting Future Telecom Strategies', 'https://www.telstrategist.com'),
+('lily_wilson78', 0, 'DataFlow Nexus: Optimizing Network Bandwidth and Stability', 'https://www.dataflownexus.com'),
+('user7', 0, '2s Numbers Multiplier', 'https://www.arduino/toge.com'),
+('user8', 0, '2s Numbers Adder', 'https://www.arduino/egot.com'),
+('user9', 0, 'DFA to NFA', 'https://www.doityourselfNfaDfa.com'),
+('user10', 0, 'CSV reader', 'https://www.CsvREAD/toge.com'),
+('user11', 0, 'Sound Redesign', 'https://www.flstudio/toge.com'),
+('user12', 0, 'CAD simulator', 'https://www.VerilogLover/toge.com');
 
 INSERT INTO job (id, start_date, salary, position, edra, evaluator, announce_date, submission_date)
 VALUES
