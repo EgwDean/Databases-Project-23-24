@@ -36,12 +36,12 @@ INSERT INTO employee VALUES
 ('user12', 'this is text', 'sistatiki6', 'PhD Computer Architecture');
 
 INSERT INTO project VALUES
-('user7', 1, '2s Numbers Multiplier', 'https://www.arduino/toge.com'),
-('user8', 1, '2s Numbers Adder', 'https://www.arduino/egot.com'),
-('user9', 2, 'DFA to NFA', 'https://www.doityourselfNfaDfa.com'),
-('user10', 1, 'CSV reader', 'https://www.CsvREAD/toge.com'),
-('user11', 1, 'Sound Redesign', 'https://www.flstudio/toge.com'),
-('user12', 1, 'CAD simulator', 'https://www.VerilogLover/toge.com');
+('user7', 0, '2s Numbers Multiplier', 'https://www.arduino/toge.com'),
+('user8', 0, '2s Numbers Adder', 'https://www.arduino/egot.com'),
+('user9', 0, 'DFA to NFA', 'https://www.doityourselfNfaDfa.com'),
+('user10', 0, 'CSV reader', 'https://www.CsvREAD/toge.com'),
+('user11', 0, 'Sound Redesign', 'https://www.flstudio/toge.com'),
+('user12', 0, 'CAD simulator', 'https://www.VerilogLover/toge.com');
 
 INSERT INTO languages VALUES
 ('user8', 'EN'),
