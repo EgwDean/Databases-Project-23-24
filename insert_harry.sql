@@ -55,13 +55,13 @@ VALUES
 
 INSERT INTO project (candid, num, descr, url)
 VALUES
-('lily_wilson78', 1, 'OptiLink: Enhancing Network Efficiency and Scalability', 'https://www.optilink.com'),
-('noah_thompson55', 1, 'DataSift: Unraveling Insights to Shape Telecom Trends', 'https://www.datasift.com'),
-('ava_harrison86', 1, 'ClientConnect: Elevating Customer Interaction Experience', 'https://www.clientconnect.com'),
-('james_mitchell71', 1, 'CyberShield: Fortifying Telecom Networks Against Threats', 'https://www.cybershield.com'),
-('sophia_baker79', 1, 'NetArchitect: Designing Resilient Network Infrastructures', 'https://www.infranet.com'),
-('daniel_parker88', 1, 'TechVista: Charting Future Telecom Strategies', 'https://www.telstrategist.com'),
-('lily_wilson78', 2, 'DataFlow Nexus: Optimizing Network Bandwidth and Stability', 'https://www.dataflownexus.com');
+('lily_wilson78', 0, 'OptiLink: Enhancing Network Efficiency and Scalability', 'https://www.optilink.com'),
+('noah_thompson55', 0, 'DataSift: Unraveling Insights to Shape Telecom Trends', 'https://www.datasift.com'),
+('ava_harrison86', 0, 'ClientConnect: Elevating Customer Interaction Experience', 'https://www.clientconnect.com'),
+('james_mitchell71', 0, 'CyberShield: Fortifying Telecom Networks Against Threats', 'https://www.cybershield.com'),
+('sophia_baker79', 0, 'NetArchitect: Designing Resilient Network Infrastructures', 'https://www.infranet.com'),
+('daniel_parker88', 0, 'TechVista: Charting Future Telecom Strategies', 'https://www.telstrategist.com'),
+('lily_wilson78', 0, 'DataFlow Nexus: Optimizing Network Bandwidth and Stability', 'https://www.dataflownexus.com');
 
 
 
