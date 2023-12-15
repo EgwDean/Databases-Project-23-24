@@ -48,13 +48,13 @@ VALUES
 
 INSERT INTO project (candid, num, descr, url)
 VALUES
-('anastasis9090', 1, 'E-commerce Website', 'https://www.ecomweb123.com'),
-('tzinaaa', 1, 'Blog Platform', 'https://www.bigblog1.com'),
-('michalis123', 1, 'Data Analysis Tool', 'https://www.dataanalysisnow.com'),
-('manos1978', 1, 'Project Management System', 'https://www.proj.man.com'),
-('tzinaaa', 2, 'Brand Identity Redesign', 'https://www.edegign.name.com'),
-('emma_ross', 1, 'Network Infrastructure Upgrade', 'https://www.infranet12.com'),
-('anastasis9090', 2, 'Digital Marketing Campaign', 'https://www.marketing123.com');
+('anastasis9090', 0, 'E-commerce Website', 'https://www.ecomweb123.com'),
+('tzinaaa', 0, 'Blog Platform', 'https://www.bigblog1.com'),
+('michalis123', 0, 'Data Analysis Tool', 'https://www.dataanalysisnow.com'),
+('manos1978', 0, 'Project Management System', 'https://www.proj.man.com'),
+('tzinaaa', 0, 'Brand Identity Redesign', 'https://www.edegign.name.com'),
+('emma_ross', 0, 'Network Infrastructure Upgrade', 'https://www.infranet12.com'),
+('anastasis9090', 0, 'Digital Marketing Campaign', 'https://www.marketing123.com');
 
 INSERT INTO job (id, start_date, salary, pposition, edra, evaluator, announce_date, submission_date)
 VALUES
