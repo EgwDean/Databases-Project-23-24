@@ -158,7 +158,7 @@ VALUES
 (NULL, '2023-02-17', 75000, 'Sound Designer', 'Oakland', 'user6', '2023-08-02 19:30:00', '2023-03-20');
 
 
-INSERT INTO applies (cand_username, job_id)
+INSERT INTO applies (cand_usrname, job_id)
 VALUES
 ('anastasis9090', 1),
 ('tzinaaa', 2),
