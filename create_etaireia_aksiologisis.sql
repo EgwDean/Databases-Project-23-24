@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS job(
     );
     
 CREATE TABLE IF NOT EXISTS applies(
-	cand_username VARCHAR(30) NOT NULL,
+	cand_usrname VARCHAR(30) NOT NULL,
     job_id INT(11) NOT NULL,
     PRIMARY KEY(cand_username, job_id),
     CONSTRAINT APPEMPL FOREIGN KEY(cand_username) REFERENCES employee(username)
