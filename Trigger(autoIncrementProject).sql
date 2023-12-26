@@ -2,7 +2,7 @@ use etaireia_aksiologisis;
 
 DELIMITER $
 
-DROP TRIGGER IF EXISTS autoIncrementProject;
+DROP TRIGGER IF EXISTS autoIncrementProject$
 
 CREATE TRIGGER autoIncrementProject
 BEFORE INSERT ON project
