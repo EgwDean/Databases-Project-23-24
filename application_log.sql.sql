@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS application_log(
     e_evaluator1 VARCHAR(30),
     e_evaluator2 VARCHAR(30),
     positionID INT NOT NULL,
-    a_state ENUM('active', 'completed', 'canceled') DEFAULT 'active' NOT NULL,
+    a_state ENUM('active', 'completed', 'canceled') DEFAULT 'completed' NOT NULL,
     finalGrade INT NOT NULL,
     PRIMARY KEY(e_username, positionID)
 	#CONSTRAINT LOGEMPL FOREIGN KEY(e_username) REFERENCES employee(username)
