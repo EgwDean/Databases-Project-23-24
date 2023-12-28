@@ -34,7 +34,15 @@ BEGIN
     DELETE FROM applies
 	WHERE applies.cand_usrname = candidate_username AND applies.job_id = ejob_id;
     
-    INSERT INTO application_log (e_username, e_evaluator1, e_evaluator2, positionID, a_state, finalGrade)
+    IF EXISTS (SELECT * FROM applies WHERE state = 'canceled' AND cand_usrname = candidate_username
+	    AND job_id = ejob_id) THEN 
+	INSERT INTO application_log (e_username, e_evaluator1, e_evaluator2, positionID, a_state, finalGrade)
+	SELECT candidate_username, evaluator_1, evaluator_2, ejob_id, 'completed', '0'
+	FROM evaluation
+	WHERE evaluation.evaluated_user = candidate_username;
+	END IF;
+
+	INSERT INTO application_log (e_username, e_evaluator1, e_evaluator2, positionID, a_state, finalGrade)
 	SELECT candidate_username, evaluator_1, evaluator_2, ejob_id, 'completed', evaluation.final_grade
 	FROM evaluation
 	WHERE evaluation.evaluated_user = candidate_username;
