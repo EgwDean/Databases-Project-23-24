@@ -1,0 +1,20 @@
+INSERT INTO evaluation (evaluator1, evaluator2, evaluated_user, grade1, grade2)
+VALUES
+('maria123', 'giorgospet', 'anastasis9090', 15, 8),
+('mark_ion', NULL, 'tzinaaa', 18, 1),
+('sara84', 'peter_wilson', 'michalis123', 12, 16),
+('egwdean', NULL, 'nicnic', 10, 1),
+('emily_johnson84', 'alex_smithson22', 'manos1978', 14, 5),
+('olivia_brown92', NULL, 'emma_ross', 17, 1),
+('user1', NULL, 'lily_wilson78', 8, 19),
+('user2', NULL, 'noah_thompson55', 13, 1),
+('jack_robinson77', 'chloe_davis89', 'ava_harrison86', 20, 2),
+('ethan_miller64', NULL, 'james_mitchell71', 16, 1),
+('user3', NULL, 'sophia_baker79', 9, 14),
+('user4', NULL, 'daniel_parker88', 11, 1),
+('user5', 'maria123', 'user7', 7, 18),
+('user6', NULL, 'user8', 1, 1),
+('user1', 'mark_ion', 'user9', 6, 20),
+('user2', NULL, 'user10', 1, 1),
+('user3', 'sara84', 'user11', 5, 11),
+(NULL, NULL, 'user12', 1, 1);
