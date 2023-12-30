@@ -31,7 +31,7 @@ IF grade1 IS NOT NULL
 THEN 
 SET result=grade1;
 ELSE
-CALL gradeCorrection(empl_username);
+SET result=gradeCorrection(empl_username);
 END IF; 
 END IF;
 
@@ -46,7 +46,7 @@ IF grade2 IS NOT NULL
 THEN
 SET result=grade2;
 ELSE
-CALL gradeCorrection(empl_username);
+SET result=gradeCorrection(empl_username);
 END IF; 
 END IF;
 
@@ -55,7 +55,3 @@ END IF;
 END$
 
 DELIMITER ;
-
-
-
-
