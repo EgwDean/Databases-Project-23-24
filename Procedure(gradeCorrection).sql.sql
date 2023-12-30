@@ -64,7 +64,7 @@ WHERE evaluation.evaluated_user=candidate_username;
 
 IF evaluator_2 IS NULL THEN
 UPDATE evaluation
-SET grade1 = corrected_grade
+SET grade2 = corrected_grade
 WHERE evaluation.evaluated_user=candidate_username;
 END IF;
 
