@@ -22,7 +22,7 @@ BEGIN
 
     IF diff < 15 THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Invalid application date! Must be more than 15 days before the start date of the job';
+        SET MESSAGE_TEXT = 'Invalid application date! Must be at least 15 days before the start date of the job';
     END IF;
 END$
 DELIMITER ;
