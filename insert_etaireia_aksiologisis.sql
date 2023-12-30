@@ -130,7 +130,8 @@ VALUES
 ('user9', 0, 'DFA to NFA', 'https://www.doityourselfNfaDfa.com'),
 ('user10', 0, 'CSV reader', 'https://www.CsvREAD/toge.com'),
 ('user11', 0, 'Sound Redesign', 'https://www.flstudio/toge.com'),
-('user12', 0, 'CAD simulator', 'https://www.VerilogLover/toge.com');
+('user12', 0, 'CAD simulator', 'https://www.VerilogLover/toge.com'),
+('user7', 0, '2s Numbers Subtractor', 'https://www.arduino/egot.com');  
 
 INSERT INTO job (id, start_date, salary, position, edra, evaluator, announce_date, submission_date)
 VALUES
@@ -155,7 +156,9 @@ VALUES
 (NULL, '2023-02-21', 70500, 'Designer', 'Oakland', 'user3', '2023-10-02 09:40:00', '2023-01-20'),
 (NULL, '2023-11-17', 170000, 'Tester', 'New Transistors', 'user4', '2023-10-02 09:30:00', '2023-11-20'),
 (NULL, '2023-02-17', 100000, 'Data Analyst', 'Analyst', 'user5', '2023-08-02 09:30:00', '2023-09-20'),
-(NULL, '2023-02-17', 75000, 'Sound Designer', 'Oakland', 'user6', '2023-08-02 19:30:00', '2023-03-20');
+(NULL, '2023-02-17', 75000, 'Sound Designer', 'Oakland', 'user6', '2023-08-02 19:30:00', '2023-03-20'),
+(NULL, '2023-01-17', 310000, 'Sound Engineer', 'FlSTudio', 'user1', '2023-07-02 07:30:00', '2023-10-20'),
+(NULL, '2023-02-17', 95000, 'Sofware Handler', 'Xlmega', 'user2', '2023-09-01 10:30:00', '2023-07-23');
 
 
 INSERT INTO applies (cand_usrname, job_id)
