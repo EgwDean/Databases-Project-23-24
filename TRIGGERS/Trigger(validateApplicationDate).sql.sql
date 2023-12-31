@@ -20,7 +20,7 @@ BEGIN
 
     SET diff = DATEDIFF(startDate, application_date);
 
-    IF diff < 15 THEN
+    IF diff < 15  THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Invalid application date! Must be more than 15 days before the start date of the job';
     END IF;
