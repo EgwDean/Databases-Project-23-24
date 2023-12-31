@@ -50,7 +50,6 @@ CALL gradeCorrection(empl_username);
 END IF; 
 END IF;
 
-
 END IF;
 END$
 
