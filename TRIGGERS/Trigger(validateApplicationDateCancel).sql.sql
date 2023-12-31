@@ -20,7 +20,7 @@ BEGIN
 
     SET diff = DATEDIFF(startDate, application_date);
 
-    IF diff < 10 AND NEW.state='canceled' THEN
+    IF diff < 10 AND NEW.state='canceled'  THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Invalid application cancel! Must be within 10 days before the start date of the job';
     END IF;
