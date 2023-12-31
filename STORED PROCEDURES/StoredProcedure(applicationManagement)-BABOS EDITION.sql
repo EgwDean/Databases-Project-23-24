@@ -61,7 +61,6 @@ IF (identifier = 'i') THEN
 	  SET MESSAGE_TEXT = 'There is not any application or the application has been deleted';
 	END IF;
 
-
  ELSEIF (identifier = 'a') THEN
     IF EXISTS ( SELECT * FROM application_log WHERE empl_usrname = e_username AND jobId = positionID AND a_state='canceled' ) THEN
 	  INSERT INTO applies VALUES ('empl_usrname', 'jobId', 'applDate', 'active');
