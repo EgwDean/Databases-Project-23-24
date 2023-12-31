@@ -14,6 +14,6 @@ AND state='active';
 IF numOfActive>=3 THEN
 SIGNAL SQLSTATE '45000'
 SET MESSAGE_TEXT = 'Invalid application. The employee already has at least 3 active applications';
-END IF?
+END IF;
 END$
 DELIMITER ;
