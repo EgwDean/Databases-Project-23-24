@@ -8,7 +8,7 @@ FOR EACH ROW
 BEGIN
 DECLARE numOfActive INT;
 SELECT COUNT(*) INTO numOfActive
-FROM applieS
+FROM applies
 WHERE applies.cand_usrname=NEW.cand_usrname
 AND state='active';
 IF numOfActive>=3 THEN
