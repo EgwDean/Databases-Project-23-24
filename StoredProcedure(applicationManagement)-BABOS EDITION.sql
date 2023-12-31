@@ -52,19 +52,24 @@ IF (identifier = 'i') THEN
     IF EXISTS ( SELECT * FROM applies WHERE empl_usrname = cand_usrname AND jobId = job_id) THEN
 	  DELETE FROM applies 
       WHERE empl_usrname = cand_usrname AND jobId = job_id;
-	  SELECT 'The application has been deleted';
-	  INSERT INTO application_log (e_username, e_evaluator1, e_evaluator2, positionID, a_state) VALUES ('empl_usrname','eva1', 'eva2', 'jobId','canceled');
+	  SIGNAL SQLSTATE '45000'
+	  SET MESSAGE_TEXT = 'The application has been deleted';
+	  
+      INSERT INTO application_log (e_username, e_evaluator1, e_evaluator2, positionID, a_state) VALUES ('empl_usrname','eva1', 'eva2', 'jobId','canceled');
 	ELSE 
-      SELECT 'There is not any application or the application has been deleted';
+      SIGNAL SQLSTATE '45000'
+	  SET MESSAGE_TEXT = 'There is not any application or the application has been deleted';
 	END IF;
 
 
  ELSEIF (identifier = 'a') THEN
     IF EXISTS ( SELECT * FROM application_log WHERE empl_usrname = e_username AND jobId = positionID AND a_state='canceled' ) THEN
 	  INSERT INTO applies VALUES ('empl_usrname', 'jobId', 'applDate', 'active');
-	  SELECT 'The application has been activated';
+	  SIGNAL SQLSTATE '45000'
+	  SET MESSAGE_TEXT = 'The application has been activated';
 	ELSE 
-      SELECT 'There is not any application or the application has already been activated';	
+	  SIGNAL SQLSTATE '45000'
+	  SET MESSAGE_TEXT = 'There is not any application or the application has already been activated';	
 	END IF;
     
 END IF;
