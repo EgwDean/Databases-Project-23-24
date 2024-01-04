@@ -1,0 +1,121 @@
+USE etaireia_aksiologisis;
+
+
+CREATE TABLE IF NOT EXISTS administrator_log(
+administrator VARCHAR(30) NOT NULL,
+excecution_time DATETIME DEFAULT '2024-01-01 00:00:00',
+event_type TEXT NOT NULL,  # ή VARCHAR(50)?
+PRIMARY KEY (administrator)
+#CONSTRAINT ADMLOG FOREIGN KEY ( administrator ) REFERENCES  administrator(admin_name)
+#ON UPDATE CASCADE ON DELETE CASCADE
+
+); 
+
+
+
+DELIMITER $
+DROP TRIGGER IF EXISTS job_insert$
+CREATE TRIGGER job_insert AFTER INSERT ON job
+FOR EACH ROW 
+BEGIN 
+DECLARE current_datetime DATETIME ;
+DECLARE event TEXT;
+SET current_datetime = NOW();
+SET event = 'The administrator has just inserted a value';
+INSERT INTO administrator_log VALUES (NEW.active_admin.username, current_datetime, event);
+END$
+DELIMITER;
+
+
+DELIMITER $
+DROP TRIGGER IF EXISTS job_delete$
+CREATE TRIGGER job_delete AFTER DELETE ON job
+FOR EACH ROW 
+BEGIN 
+DECLARE current_datetime DATETIME ;
+SET current_datetime = NOW();
+DECLARE event TEXT;
+SET event = 'The administrator has just deleted a value';
+INSERT INTO administrator_log VALUES (NEW.active_admin.username, current_datetime, event);   #χρησιμοποιείται το ψευδώνημο NEW γιατί δεν με ενδιαφέρει κάποια τίμη που διαγράφεται  
+END$
+DELIMITER;
+
+DELIMITER $
+DROP TRIGGER IF EXISTS job_update$
+CREATE TRIGGER job_update AFTER UPDATE ON job
+FOR EACH ROW 
+BEGIN 
+DECLARE current_datetime DATETIME ;
+SET current_datetime = NOW();
+DECLARE event TEXT;
+SET event = 'The administrator has just updated a value';
+INSERT INTO administrator_log VALUES (NEW.active_admin.username, current_datetime, event);
+END$
+DELIMITER;
+
+
+DELIMITER $
+DROP TRIGGER IF EXISTS degree_insert$
+CREATE TRIGGER degree_insert AFTER INSERT ON degree
+FOR EACH ROW 
+BEGIN 
+DECLARE event TEXT;
+SET event = 'The administrator has just inserted a value';
+INSERT INTO administrator_log VALUES (NEW.active_admin.username, NOW(), event);
+END$
+DELIMITER;
+
+DELIMITER $
+DROP TRIGGER IF EXISTS degree_update$
+CREATE TRIGGER degree_update AFTER UPDATE ON degree
+FOR EACH ROW 
+BEGIN 
+DECLARE event TEXT;
+SET event = 'The administrator has just updated a value';
+INSERT INTO administrator_log VALUES ( NEW.active_admin.username, NOW(), event);
+END$
+DELIMITER;
+
+DELIMITER $
+DROP TRIGGER IF EXISTS degree_delete$
+CREATE TRIGGER degree_delete AFTER DELETE ON degree
+FOR EACH ROW 
+BEGIN 
+DECLARE event TEXT;
+SET event = 'The administrator has just deleted a value';
+INSERT INTO administrator_log VALUES ( NEW.active_admin.username, NOW(), event);
+END$
+DELIMITER;
+
+DELIMITER $
+DROP TRIGGER IF EXISTS user_insert$
+CREATE TRIGGER user_insert AFTER INSERT ON user 
+FOR EACH ROW 
+BEGIN 
+DECLARE event TEXT;
+SET event = 'The administrator has just inserted a value';
+INSERT INTO administrator_log VALUES (NEW.active_admin.username, NOW(), event);
+END$
+DELIMITER;
+
+DELIMITER $
+DROP TRIGGER IF EXISTS user_update$
+CREATE TRIGGER user_update AFTER UPDATE ON user 
+FOR EACH ROW 
+BEGIN 
+DECLARE event TEXT;
+SET event = 'The administrator has just updated a value';
+INSERT INTO administrator_log VALUES (NEW.active_admin.username, NOW(), event);
+END$
+DELIMITER;
+
+DELIMITER $
+DROP TRIGGER IF EXISTS user_delete$
+CREATE TRIGGER user_delete AFTER DELETE ON user 
+FOR EACH ROW 
+BEGIN 
+DECLARE event TEXT;
+SET event = 'The administrator has just deleted a value';
+INSERT INTO administrator_log VALUES (NEW.active_admin.username, NOW(), event);
+END$
+DELIMITER;
