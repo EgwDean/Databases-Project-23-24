@@ -137,3 +137,201 @@ IF EXISTS (SELECT * FROM applies WHERE state = 'canceled' AND cand_usrname = can
 END$
 
 DELIMITER ;
+
+
+
+DELIMITER $
+DROP PROCEDURE IF EXISTS generateRandomRecords$
+CREATE PROCEDURE generateRandomRecords()
+BEGIN
+    DECLARE i INT;
+    SET i = 0;
+
+    WHILE i < 60001 DO
+        INSERT INTO application_log
+        VALUES (
+            CONCAT('user_', i),
+            CONCAT('evaluator1_', i),
+            CONCAT('evaluator2_', i),
+            i MOD 500 + 1,
+            'completed', 
+            (i MOD 20) + 1
+        );
+        SET i = i + 1;
+    END WHILE;
+END $
+DELIMITER ;
+#Edit->Preferences->SQL Editor (all the timers in MySQL session to be set to 3600)
+
+DELIMITER $
+DROP INDEX idx_evaluator ON application_log$
+CREATE INDEX idx_evaluator ON application_log(e_evaluator1, e_evaluator2)$
+
+DROP PROCEDURE IF EXISTS searchByEval$
+CREATE PROCEDURE searchByEval(IN eval_username VARCHAR(30))
+BEGIN
+SELECT e_username, positionID
+FROM application_log
+WHERE e_evaluator1=eval_username OR e_evaluator2=eval_username;
+END$
+DELIMITER ;
+
+DELIMITER $
+DROP INDEX idx_empljob ON application_log$
+CREATE INDEX idx_empljob ON application_log(finalGrade)$
+
+DROP PROCEDURE IF EXISTS searchByGradeRange$
+CREATE PROCEDURE searchByGradeRange(IN low INT(11), IN high INT(11))
+BEGIN
+SELECT application.e_username, application.positionID, application.finalGrade 
+FROM application_log 
+WHERE application_log.finalGrade BETWEEN low AND high; 
+END$
+DELIMITER ;
+
+DELIMITER $
+DROP PROCEDURE IF EXISTS applicationManagement$
+CREATE PROCEDURE applicationManagement (empl_usrname VARCHAR(30), jobId INT(11), identifier ENUM ('i', 'c', 'a'))
+BEGIN 
+DECLARE applDate DATE;
+DECLARE eva1 VARCHAR(30);
+DECLARE eva2 VARCHAR (30);
+DECLARE sameFirm CHAR(9);
+ 
+SET applDate = CURDATE();
+ 
+IF (identifier = 'i') THEN
+ 
+  SELECT evaluator1 INTO eva1 FROM evaluation 
+  INNER JOIN employee ON evaluation.evaluated_user = employee.username 
+  INNER JOIN applies ON applies.cand_usrname = employee.username 
+  WHERE cand_usrname = empl_usrname AND job_id = jobId;
+  
+  SELECT evaluator2 INTO eva2 FROM evaluation 
+  INNER JOIN employee ON evaluation.evaluated_user = employee.username 
+  INNER JOIN applies ON applies.cand_usrname = employee.username
+  WHERE cand_usrname = empl_usrname AND job_id = jobId;
+  
+    IF (eva1 IS NULL) THEN 
+      SELECT evaluator.username INTO eva1 FROM evaluator 
+      INNER JOIN job ON evaluator.username=job.evaluator
+      INNER JOIN applies ON job.id=applies.job_id
+      INNER JOIN employee ON applies.cand_usrname=employee.username
+      WHERE cand_usrname = empl_usrname AND job_id = jobId;
+      UPDATE evaluation
+      SET evaluation.evaluator1=eva1
+      WHERE evaluation.evaluated_user=empl_usrname;
+	END IF;
+    
+    IF(eva2 IS NULL) THEN
+    
+      SELECT evaluator.firm INTO sameFirm FROM evaluator
+      INNER JOIN evaluation ON evaluator.username=evaluation.evaluator1;
+      
+	  SELECT evaluator.username INTO eva2 FROM evaluator 
+      WHERE evaluator.firm=sameFirm
+      LIMIT 1;
+      UPDATE evaluation
+      SET evaluation.evaluator2=eva2
+      WHERE evaluation.evaluated_user=empl_usrname;
+	END IF;
+      
+      INSERT INTO applies VALUES ('empl_usrname', 'jobId', 'applDate', 'completed');
+
+	
+ ELSEIF (identifier = 'c') THEN 
+    IF EXISTS ( SELECT * FROM applies WHERE empl_usrname = cand_usrname AND jobId = job_id) THEN
+	  DELETE FROM applies 
+      WHERE empl_usrname = cand_usrname AND jobId = job_id;
+	  SIGNAL SQLSTATE '45000'
+	  SET MESSAGE_TEXT = 'The application has been deleted';
+	  
+      INSERT INTO application_log (e_username, e_evaluator1, e_evaluator2, positionID, a_state) VALUES ('empl_usrname','eva1', 'eva2', 'jobId','canceled');
+	ELSE 
+      SIGNAL SQLSTATE '45000'
+	  SET MESSAGE_TEXT = 'There is not any application or the application has been deleted';
+	END IF;
+
+ ELSEIF (identifier = 'a') THEN
+    IF EXISTS ( SELECT * FROM application_log WHERE empl_usrname = e_username AND jobId = positionID AND a_state='canceled' ) THEN
+	  INSERT INTO applies VALUES ('empl_usrname', 'jobId', 'applDate', 'active');
+	  SIGNAL SQLSTATE '45000'
+	  SET MESSAGE_TEXT = 'The application has been activated';
+	ELSE 
+	  SIGNAL SQLSTATE '45000'
+	  SET MESSAGE_TEXT = 'There is not any application or the application has already been activated';	
+	END IF;
+    
+END IF;
+ 
+END$
+DELIMITER ;
+
+DELIMITER $
+DROP PROCEDURE IF EXISTS checkIfEvaluated$
+CREATE PROCEDURE checkIfEvaluated(IN eval_username VARCHAR(30), IN empl_username VARCHAR(30), IN job_id INT(11), OUT result INT(11))
+BEGIN
+
+DECLARE grade1 INT(11);
+DECLARE grade2 INT(11);
+
+IF NOT EXISTS(
+SELECT evaluator.username, employee.username, job.id
+FROM evaluator
+INNER JOIN job ON evaluator.username=job.evaluator
+INNER JOIN applies ON job.id=applies.job_id
+INNER JOIN employee ON applies.cand_usrname=employee.username
+WHERE evaluator.username=eval_username
+AND employee.username=empl_username
+AND job.id=job_id)
+THEN
+SET result=0;
+
+ELSE
+
+IF evaluation.evaluator1=eval_username
+THEN
+SELECT evaluation.grade1
+INTO grade1
+FROM evaluation
+INNER JOIN employee ON evaluation.evaluated_user=employee.username
+WHERE evaluation.evaluator1=eval_username;
+IF grade1 IS NOT NULL
+THEN 
+SET result=grade1;
+ELSE
+CALL gradeCorrection(empl_username);
+END IF; 
+END IF;
+
+IF evaluation.evaluator2=eval_username
+THEN
+SELECT evaluation.grade2
+INTO grade2
+FROM evaluation
+INNER JOIN employee ON evaluation.evaluated_user=employee.username
+WHERE evaluation.evaluator2=eval_username;
+IF grade2 IS NOT NULL
+THEN
+SET result=grade2;
+ELSE
+CALL gradeCorrection(empl_username);
+END IF; 
+END IF;
+
+END IF;
+END$
+
+DELIMITER ;
+
+
+DELIMITER $
+DROP PROCEDURE IF EXISTS checkPositionOccupied$
+CREATE PROCEDURE checkPositionOccupied(IN job_id VARCHAR(30))
+BEGIN
+CALL positionEvaluation(job_id);
+SELECT emp_username, jobid
+FROM has_position
+WHERE jobid=job_id;
+END$
+DELIMITER ;
