@@ -187,3 +187,18 @@ PRIMARY KEY(admin_name),
 CONSTRAINT ADMINUSER FOREIGN KEY(admin_name) REFERENCES user(username) 
 ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+CREATE TABLE active_admin(
+username VARCHAR(30) NOT NULL,
+PRIMARY KEY(username),
+CONSTRAINT ACTADMN FOREIGN KEY (username) REFERENCES administrator (admin_name)
+);
+
+
+CREATE TABLE IF NOT EXISTS administrator_log(
+administrator VARCHAR(30) NOT NULL,
+excecution_time DATETIME DEFAULT '2024-01-01 00:00:00',
+event_type TEXT NOT NULL,  
+PRIMARY KEY (event_type)
+); 
+
