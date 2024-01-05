@@ -10,3 +10,4 @@ FROM application_log
 WHERE application_log.finalGrade BETWEEN low AND high; 
 END$
 DELIMITER ;
+#..
