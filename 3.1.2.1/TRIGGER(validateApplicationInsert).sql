@@ -1,4 +1,4 @@
-
+USE etaireia_aksiologisis;
 
 DELIMITER $
 DROP TRIGGER IF EXISTS validateApplicationInsert$
