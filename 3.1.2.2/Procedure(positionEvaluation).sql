@@ -1,3 +1,4 @@
+USE etaireia_aksiologisis;
 DELIMITER $
 DROP PROCEDURE IF EXISTS positionEvaluation$
 CREATE PROCEDURE positionEvaluation(IN ejob_id INT)
