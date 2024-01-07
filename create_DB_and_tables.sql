@@ -188,7 +188,7 @@ ON UPDATE CASCADE ON DELETE CASCADE
 
 CREATE TABLE active_admin(
 username VARCHAR(30) NOT NULL,
-PRIMARY KEY(username),
+PRIMARY KEY(username)
 );
 
 
