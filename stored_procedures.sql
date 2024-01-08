@@ -1,7 +1,5 @@
 USE etaireia_aksiologisis;
 
-USE etaireia_aksiologisis;
-
 DELIMITER $
 DROP PROCEDURE IF EXISTS gradeCorrection$
 CREATE PROCEDURE gradeCorrection(IN candidate_username VARCHAR(30))
@@ -164,7 +162,6 @@ DELIMITER ;
 #Edit->Preferences->SQL Editor (all the timers in MySQL session to be set to 3600)
 
 DELIMITER $
-DROP INDEX idx_evaluator ON application_log$
 CREATE INDEX idx_evaluator ON application_log(e_evaluator1, e_evaluator2)$
 
 DROP PROCEDURE IF EXISTS searchByEval$
@@ -177,7 +174,6 @@ END$
 DELIMITER ;
 
 DELIMITER $
-DROP INDEX idx_empljob ON application_log$
 CREATE INDEX idx_empljob ON application_log(finalGrade)$
 
 DROP PROCEDURE IF EXISTS searchByGradeRange$
