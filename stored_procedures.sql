@@ -192,28 +192,35 @@ BEGIN
 DECLARE applDate DATE;
 DECLARE eva1 VARCHAR(30);
 DECLARE eva2 VARCHAR (30);
+DECLARE empl VARCHAR(30);
+DECLARE job INT(11);
 DECLARE sameFirm CHAR(9);
  
 SET applDate = CURDATE();
  
 IF (identifier = 'i') THEN
  
-  SELECT evaluator1 INTO eva1 FROM evaluation 
+    IF (NOT EXISTS(SELECT employee.username FROM employee WHERE employee.username=empl_usrname) OR NOT EXISTS (SELECT job.id FROM job WHERE job.id=jobId))
+      THEN
+      SIGNAL SQLSTATE '45000'
+	  SET MESSAGE_TEXT = 'There is no such employee or job';
+	END IF;
+  SELECT evaluation.evaluator1 INTO eva1 FROM evaluation
   INNER JOIN employee ON evaluation.evaluated_user = employee.username 
-  INNER JOIN applies ON applies.cand_usrname = employee.username 
-  WHERE cand_usrname = empl_usrname AND job_id = jobId;
-  
-  SELECT evaluator2 INTO eva2 FROM evaluation 
+  INNER JOIN applies ON employee.username = applies.cand_usrname
+  WHERE evaluation.evaluated_user = empl_usrname AND applies.job_id = jobId;
+
+  SELECT evaluation.evaluator2 INTO eva2 FROM evaluation 
   INNER JOIN employee ON evaluation.evaluated_user = employee.username 
   INNER JOIN applies ON applies.cand_usrname = employee.username
-  WHERE cand_usrname = empl_usrname AND job_id = jobId;
+  WHERE evaluation.evaluated_user = empl_usrname AND applies.job_id = jobId;
   
     IF (eva1 IS NULL) THEN 
       SELECT evaluator.username INTO eva1 FROM evaluator 
       INNER JOIN job ON evaluator.username=job.evaluator
       INNER JOIN applies ON job.id=applies.job_id
       INNER JOIN employee ON applies.cand_usrname=employee.username
-      WHERE cand_usrname = empl_usrname AND job_id = jobId;
+      WHERE employee.username = empl_usrname AND applies.job_id = jobId;
       UPDATE evaluation
       SET evaluation.evaluator1=eva1
       WHERE evaluation.evaluated_user=empl_usrname;
@@ -222,9 +229,10 @@ IF (identifier = 'i') THEN
     IF(eva2 IS NULL) THEN
     
       SELECT evaluator.firm INTO sameFirm FROM evaluator
-      INNER JOIN evaluation ON evaluator.username=evaluation.evaluator1;
+      INNER JOIN evaluation ON evaluator.username=evaluation.evaluator1
+      WHERE evaluation.evaluator1 = eva1;
       
-	  SELECT evaluator.username INTO eva2 FROM evaluator 
+	  SELECT evaluator.username INTO eva2 FROM evaluator  
       WHERE evaluator.firm=sameFirm
       LIMIT 1;
       UPDATE evaluation
@@ -232,25 +240,27 @@ IF (identifier = 'i') THEN
       WHERE evaluation.evaluated_user=empl_usrname;
 	END IF;
       
-      INSERT INTO applies VALUES ('empl_usrname', 'jobId', 'applDate', 'completed');
+      INSERT INTO applies VALUES (empl_usrname, jobId, applDate, 'active');
 
 	
  ELSEIF (identifier = 'c') THEN 
     IF EXISTS ( SELECT * FROM applies WHERE empl_usrname = cand_usrname AND jobId = job_id) THEN
-	  DELETE FROM applies 
-      WHERE empl_usrname = cand_usrname AND jobId = job_id;
-	  SIGNAL SQLSTATE '45000'
-	  SET MESSAGE_TEXT = 'The application has been deleted';
 	  
-      INSERT INTO application_log (e_username, e_evaluator1, e_evaluator2, positionID, a_state) VALUES ('empl_usrname','eva1', 'eva2', 'jobId','canceled');
+      UPDATE applies
+      SET applies.state = 'canceled'
+      WHERE applies.cand_usrname = empl_usrname AND applies.job_id = jobId;
+	  SIGNAL SQLSTATE '45000'
+	  SET MESSAGE_TEXT = 'The application has been canceled';
 	ELSE 
       SIGNAL SQLSTATE '45000'
-	  SET MESSAGE_TEXT = 'There is not any application or the application has been deleted';
+	  SET MESSAGE_TEXT = 'There is not any application or the application has already been canceled';
 	END IF;
 
  ELSEIF (identifier = 'a') THEN
-    IF EXISTS ( SELECT * FROM application_log WHERE empl_usrname = e_username AND jobId = positionID AND a_state='canceled' ) THEN
-	  INSERT INTO applies VALUES ('empl_usrname', 'jobId', 'applDate', 'active');
+    IF EXISTS ( SELECT * FROM applies WHERE applies.cand_usrname = empl_usrname  AND applies.job_id = jobId AND applies.state='canceled' ) THEN
+	  UPDATE applies 
+      SET applies.state = 'active'
+      WHERE applies.cand_usrname = empl_usrname AND applies.job_id = jobId;
 	  SIGNAL SQLSTATE '45000'
 	  SET MESSAGE_TEXT = 'The application has been activated';
 	ELSE 
@@ -270,6 +280,8 @@ BEGIN
 
 DECLARE grade1 INT(11);
 DECLARE grade2 INT(11);
+DECLARE eval1 VARCHAR(11);
+DECLARE eval2 VARCHAR(11);
 
 IF NOT EXISTS(
 SELECT evaluator.username, employee.username, job.id
@@ -285,13 +297,15 @@ SET result=0;
 
 ELSE
 
-IF evaluation.evaluator1=eval_username
+
+SELECT evaluator1 INTO eval1 FROM evaluation WHERE evaluator1 = eval_username;
+IF (eval1 IS NOT NULL)
 THEN
-SELECT evaluation.grade1
-INTO grade1
+SELECT evaluation.grade1 INTO grade1
 FROM evaluation
 INNER JOIN employee ON evaluation.evaluated_user=employee.username
-WHERE evaluation.evaluator1=eval_username;
+WHERE evaluation.evaluator1=eval_username
+AND evaluation.evaluated_user=empl_username;
 IF grade1 IS NOT NULL
 THEN 
 SET result=grade1;
@@ -300,13 +314,14 @@ CALL gradeCorrection(empl_username);
 END IF; 
 END IF;
 
-IF evaluation.evaluator2=eval_username
+SELECT evaluator2 INTO eval2 FROM evaluation WHERE evaluator2 = eval_username;
+IF (eval2 IS NOT NULL)
 THEN
-SELECT evaluation.grade2
-INTO grade2
+SELECT evaluation.grade2 INTO grade2
 FROM evaluation
 INNER JOIN employee ON evaluation.evaluated_user=employee.username
-WHERE evaluation.evaluator2=eval_username;
+WHERE evaluation.evaluator2=eval_username
+AND evaluation.evaluated_user=empl_username;
 IF grade2 IS NOT NULL
 THEN
 SET result=grade2;
