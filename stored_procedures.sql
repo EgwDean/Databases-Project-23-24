@@ -179,7 +179,7 @@ CREATE INDEX idx_empljob ON application_log(finalGrade)$
 DROP PROCEDURE IF EXISTS searchByGradeRange$
 CREATE PROCEDURE searchByGradeRange(IN low INT(11), IN high INT(11))
 BEGIN
-SELECT application.e_username, application.positionID, application.finalGrade 
+SELECT application_log.e_username, application_log.positionID, application_log.finalGrade 
 FROM application_log 
 WHERE application_log.finalGrade BETWEEN low AND high; 
 END$
