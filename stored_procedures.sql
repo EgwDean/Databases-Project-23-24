@@ -162,6 +162,7 @@ DELIMITER ;
 #Edit->Preferences->SQL Editor (all the timers in MySQL session to be set to 3600)
 
 DELIMITER $
+DROP INDEX idx_evaluator ON application_log$
 CREATE INDEX idx_evaluator ON application_log(e_evaluator1, e_evaluator2)$
 
 DROP PROCEDURE IF EXISTS searchByEval$
@@ -174,6 +175,7 @@ END$
 DELIMITER ;
 
 DELIMITER $
+DROP INDEX idx_empljob ON application_log$
 CREATE INDEX idx_empljob ON application_log(finalGrade)$
 
 DROP PROCEDURE IF EXISTS searchByGradeRange$
@@ -340,9 +342,14 @@ DELIMITER $
 DROP PROCEDURE IF EXISTS checkPositionOccupied$
 CREATE PROCEDURE checkPositionOccupied(IN job_id VARCHAR(30))
 BEGIN
-CALL positionEvaluation(job_id);
+IF EXISTS(SELECT * FROM has_position WHERE jobid=job_id)
+THEN
 SELECT emp_username, jobid
 FROM has_position
 WHERE jobid=job_id;
+ELSE
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'No evaluation has taken place for this job. Please call procedure positionEvaluation first';
+END IF;
 END$
 DELIMITER ;
