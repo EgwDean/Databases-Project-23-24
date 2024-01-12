@@ -3,24 +3,24 @@ USE etaireia_aksiologisis;
 DELIMITER $
 DROP TRIGGER IF EXISTS validateApplicationDate$
 CREATE TRIGGER validateApplicationDate
-BEFORE INSERT ON applies
+AFTER INSERT ON applies
 FOR EACH ROW
 BEGIN
     DECLARE applicationDate DATE;
     DECLARE startDate DATE;
     DECLARE diff INT;
 
-    SELECT start_date INTO startDate
+    SELECT job.start_date INTO startDate
     FROM job
-    WHERE id = NEW.job_id;
+    WHERE job.id = NEW.job_id;
     
     SELECT application_date INTO applicationDate
     FROM applies
     WHERE applies.application_date=NEW.application_date;
 
-    SET diff = DATEDIFF(startDate, application_date);
+    SET diff = DATEDIFF(startDate, applicationDate);
 
-    IF diff < 15 THEN
+    IF (diff<15) THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Invalid application date! Must be at least 15 days before the start date of the job';
     END IF;
@@ -45,7 +45,7 @@ BEGIN
     FROM applies
     WHERE applies.application_date=NEW.application_date;
 
-    SET diff = DATEDIFF(startDate, application_date);
+    SET diff = DATEDIFF(startDate, applicationDate);
 
     IF diff < 10 AND NEW.state='canceled' THEN
         SIGNAL SQLSTATE '45000'
