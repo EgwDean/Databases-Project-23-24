@@ -147,8 +147,8 @@ DECLARE current_datetime DATETIME ;
 DECLARE event TEXT;
 SELECT MAX(job.id) INTO job_id FROM job;
 SET current_datetime = NOW();
-SET event = CONCAT('The job with id ', job_id, ' has just been inserted by the administrator ',NEW.active_admin.username);
-INSERT INTO administrator_log VALUES (NEW.active_admin.username, current_datetime, event);
+SET event = CONCAT('The job with id ', job_id, ' has just been inserted by the administrator ', active_admin.username);
+INSERT INTO administrator_log VALUES (active_admin.username, current_datetime, event);
 END$
 DELIMITER;
 
@@ -162,9 +162,9 @@ DECLARE job_id INT(11);
 DECLARE current_datetime DATETIME ;
 DECLARE event TEXT;
 SET current_datetime = NOW();
-SELECT OLD.job.id INTO job_id FROM job;
-SET event = CONCAT('The job with id ', job_id, ' has just been deleted by the administrator ',NEW.active_admin.username);
-INSERT INTO administrator_log VALUES (NEW.active_admin.username, current_datetime, event);
+SELECT OLD.id INTO job_id FROM job;
+SET event = CONCAT('The job with id ', job_id, ' has just been deleted by the administrator ', active_admin.username);
+INSERT INTO administrator_log VALUES (active_admin.username, current_datetime, event);
 END$
 DELIMITER;
 
@@ -176,10 +176,10 @@ BEGIN
 DECLARE job_id INT(11);
 DECLARE current_datetime DATETIME ;
 DECLARE event TEXT;
-SELECT NEW.job.id INTO job_id FROM job;
+SELECT OLD.id INTO job_id FROM job;
 SET current_datetime = NOW();
-SET event = CONCAT('The job with id ', job_id, ' has just been updated by the administrator ',NEW.active_admin.username);
-INSERT INTO administrator_log VALUES (NEW.active_admin.username, current_datetime, event);
+SET event = CONCAT('The job with id ', job_id, ' has just been updated by the administrator ', active_admin.username);
+INSERT INTO administrator_log VALUES (active_admin.username, current_datetime, event);
 END$
 DELIMITER;
 
@@ -193,8 +193,8 @@ DECLARE d_titlos VARCHAR(150);
 DECLARE d_idryma VARCHAR (140);
 DECLARE event TEXT;
 SELECT NEW.titlos, NEW.idryma INTO d_titlos, d_idryma FROM degree;
-SET event = CONCAT('The degree with title ', d_titlos, 'and idryma ', d_idryma, ' has just been inserted by the administrator ',NEW.active_admin.username);
-INSERT INTO administrator_log VALUES (NEW.active_admin.username, NOW(), event);
+SET event = CONCAT('The degree with title ', d_titlos, 'and idryma ', d_idryma, ' has just been inserted by the administrator ', active_admin.username);
+INSERT INTO administrator_log VALUES (active_admin.username, NOW(), event);
 END$
 DELIMITER;
 
@@ -206,9 +206,9 @@ BEGIN
 DECLARE d_titlos VARCHAR(150);
 DECLARE d_idryma VARCHAR (140);
 DECLARE event TEXT;
-SELECT NEW.titlos, NEW.idryma INTO d_titlos, d_idryma FROM degree;
-SET event = CONCAT('The degree with title ', d_titlos, 'and idryma ', d_idryma, ' has just been updated by the administrator ',NEW.active_admin.username);
-INSERT INTO administrator_log VALUES ( NEW.active_admin.username, NOW(), event);
+SELECT OLD.titlos, OLD.idryma INTO d_titlos, d_idryma FROM degree;
+SET event = CONCAT('The degree with title ', d_titlos, 'and idryma ', d_idryma, ' has just been updated by the administrator ', active_admin.username);
+INSERT INTO administrator_log VALUES (active_admin.username, NOW(), event);
 END$
 DELIMITER;
 
@@ -221,8 +221,8 @@ DECLARE d_titlos VARCHAR(150);
 DECLARE d_idryma VARCHAR (140);
 DECLARE event TEXT;
 SELECT OLD.titlos, OLD.idryma INTO d_titlos, d_idryma FROM degree;
-SET event = CONCAT('The degree with title ', d_titlos, 'and idryma ', d_idryma, ' has just been deleted by the administrator ',NEW.active_admin.username);
-INSERT INTO administrator_log VALUES ( NEW.active_admin.username, NOW(), event);
+SET event = CONCAT('The degree with title ', d_titlos, 'and idryma ', d_idryma, ' has just been deleted by the administrator ', active_admin.username);
+INSERT INTO administrator_log VALUES (active_admin.username, NOW(), event);
 END$
 DELIMITER;
 
@@ -234,8 +234,8 @@ BEGIN
 DECLARE t_username VARCHAR(30);
 DECLARE event TEXT;
 SELECT NEW.username INTO t_username FROM user;
-SET event = CONCAT('The user with username ', t_username, ' has just been inserted by the administrator ',NEW.active_admin.username);
-INSERT INTO administrator_log VALUES (NEW.active_admin.username, NOW(), event);
+SET event = CONCAT('The user with username ', t_username, ' has just been inserted by the administrator ', active_admin.username);
+INSERT INTO administrator_log VALUES (active_admin.username, NOW(), event);
 END$
 DELIMITER;
 
@@ -247,8 +247,8 @@ BEGIN
 DECLARE t_username VARCHAR(30);
 DECLARE event TEXT;
 SELECT NEW.username INTO t_username FROM user;
-SET event = CONCAT('The user with username ', t_username, ' has just been updated by the administrator ',NEW.active_admin.username);
-INSERT INTO administrator_log VALUES (NEW.active_admin.username, NOW(), event);
+SET event = CONCAT('The user with username ', t_username, ' has just been updated by the administrator ', active_admin.username);
+INSERT INTO administrator_log VALUES (active_admin.username, NOW(), event);
 END$
 DELIMITER;
 
@@ -260,7 +260,7 @@ BEGIN
 DECLARE t_username VARCHAR(30);
 DECLARE event TEXT;
 SELECT OLD.username INTO t_username FROM user; 
-SET event = CONCAT('The user with username ', t_username, ' has just been deleted by the administrator ',NEW.active_admin.username);
-INSERT INTO administrator_log VALUES (NEW.active_admin.username, NOW(), event);
+SET event = CONCAT('The user with username ', t_username, ' has just been deleted by the administrator ', active_admin.username);
+INSERT INTO administrator_log VALUES (active_admin.username, NOW(), event);
 END$
 DELIMITER ;
