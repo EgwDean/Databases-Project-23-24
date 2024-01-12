@@ -143,43 +143,51 @@ CREATE TRIGGER job_insert AFTER INSERT ON job
 FOR EACH ROW 
 BEGIN 
 DECLARE job_id INT(11);
-DECLARE current_datetime DATETIME ;
-DECLARE event TEXT;
+DECLARE current_datetime DATETIME;
+DECLARE active_admin VARCHAR(30);
+DECLARE event TEXT(256);
 SELECT MAX(job.id) INTO job_id FROM job;
 SET current_datetime = NOW();
-SET event = CONCAT('The job with id ', job_id, ' has just been inserted by the administrator ', active_admin.username);
-INSERT INTO administrator_log VALUES (active_admin.username, current_datetime, event);
+SELECT active_admin.username INTO active_admin FROM active_admin LIMIT 1;
+SET event = CONCAT('The job with id ', job_id, ' has just been inserted by the administrator ', active_admin);
+INSERT INTO administrator_log VALUES (active_admin, current_datetime, event);
 END$
 DELIMITER;
 
 
 DELIMITER $
 DROP TRIGGER IF EXISTS job_delete$
-CREATE TRIGGER job_delete AFTER DELETE ON job
+CREATE TRIGGER job_delete BEFORE DELETE ON job
 FOR EACH ROW 
 BEGIN 
 DECLARE job_id INT(11);
 DECLARE current_datetime DATETIME ;
-DECLARE event TEXT;
+DECLARE active_admin VARCHAR(30);
+DECLARE event TEXT(256);
 SET current_datetime = NOW();
-SELECT OLD.id INTO job_id FROM job;
-SET event = CONCAT('The job with id ', job_id, ' has just been deleted by the administrator ', active_admin.username);
-INSERT INTO administrator_log VALUES (active_admin.username, current_datetime, event);
+SELECT id INTO job_id FROM job
+WHERE id = OLD.id;
+SELECT active_admin.username INTO active_admin FROM active_admin LIMIT 1;
+SET event = CONCAT('The job with id ', job_id, ' has just been deleted by the administrator ', active_admin);
+INSERT INTO administrator_log VALUES (active_admin, current_datetime, event);
 END$
 DELIMITER;
 
 DELIMITER $
 DROP TRIGGER IF EXISTS job_update$
-CREATE TRIGGER job_update AFTER UPDATE ON job
+CREATE TRIGGER job_update BEFORE UPDATE ON job
 FOR EACH ROW 
 BEGIN 
 DECLARE job_id INT(11);
 DECLARE current_datetime DATETIME ;
-DECLARE event TEXT;
-SELECT OLD.id INTO job_id FROM job;
+DECLARE active_admin VARCHAR(30);
+DECLARE event TEXT(256);
+SELECT id INTO job_id FROM job
+WHERE id = OLD.id;
 SET current_datetime = NOW();
-SET event = CONCAT('The job with id ', job_id, ' has just been updated by the administrator ', active_admin.username);
-INSERT INTO administrator_log VALUES (active_admin.username, current_datetime, event);
+SELECT active_admin.username INTO active_admin FROM active_admin LIMIT 1;
+SET event = CONCAT('The job with id ', job_id, ' has just been updated by the administrator ', active_admin);
+INSERT INTO administrator_log VALUES (active_admin, current_datetime, event);
 END$
 DELIMITER;
 
@@ -191,38 +199,47 @@ FOR EACH ROW
 BEGIN 
 DECLARE d_titlos VARCHAR(150);
 DECLARE d_idryma VARCHAR (140);
-DECLARE event TEXT;
-SELECT NEW.titlos, NEW.idryma INTO d_titlos, d_idryma FROM degree;
-SET event = CONCAT('The degree with title ', d_titlos, 'and idryma ', d_idryma, ' has just been inserted by the administrator ', active_admin.username);
-INSERT INTO administrator_log VALUES (active_admin.username, NOW(), event);
+DECLARE active_admin VARCHAR(30);
+DECLARE event TEXT(256);
+SELECT titlos, idryma INTO d_titlos, d_idryma FROM degree
+WHERE titlos = NEW.titlos AND idryma = NEW.idryma;
+SELECT active_admin.username INTO active_admin FROM active_admin LIMIT 1;
+SET event = CONCAT('The degree with title ', d_titlos, 'and idryma ', d_idryma, ' has just been inserted by the administrator ', active_admin);
+INSERT INTO administrator_log VALUES (active_admin, NOW(), event);
 END$
 DELIMITER;
 
 DELIMITER $
 DROP TRIGGER IF EXISTS degree_update$
-CREATE TRIGGER degree_update AFTER UPDATE ON degree
+CREATE TRIGGER degree_update BEFORE UPDATE ON degree
 FOR EACH ROW 
 BEGIN 
 DECLARE d_titlos VARCHAR(150);
 DECLARE d_idryma VARCHAR (140);
-DECLARE event TEXT;
-SELECT OLD.titlos, OLD.idryma INTO d_titlos, d_idryma FROM degree;
-SET event = CONCAT('The degree with title ', d_titlos, 'and idryma ', d_idryma, ' has just been updated by the administrator ', active_admin.username);
-INSERT INTO administrator_log VALUES (active_admin.username, NOW(), event);
+DECLARE active_admin VARCHAR(30);
+DECLARE event TEXT(256);
+SELECT titlos, idryma INTO d_titlos, d_idryma FROM degree
+WHERE titlos = OLD.titlos AND idryma = OLD.idryma;
+SELECT active_admin.username INTO active_admin FROM active_admin LIMIT 1;
+SET event = CONCAT('The degree with title ', d_titlos, 'and idryma ', d_idryma, ' has just been updated by the administrator ', active_admin);
+INSERT INTO administrator_log VALUES (active_admin, NOW(), event);
 END$
 DELIMITER;
 
 DELIMITER $
 DROP TRIGGER IF EXISTS degree_delete$
-CREATE TRIGGER degree_delete AFTER DELETE ON degree
+CREATE TRIGGER degree_delete BEFORE DELETE ON degree
 FOR EACH ROW 
 BEGIN 
 DECLARE d_titlos VARCHAR(150);
 DECLARE d_idryma VARCHAR (140);
-DECLARE event TEXT;
-SELECT OLD.titlos, OLD.idryma INTO d_titlos, d_idryma FROM degree;
-SET event = CONCAT('The degree with title ', d_titlos, 'and idryma ', d_idryma, ' has just been deleted by the administrator ', active_admin.username);
-INSERT INTO administrator_log VALUES (active_admin.username, NOW(), event);
+DECLARE active_admin VARCHAR(30);
+DECLARE event TEXT(256);
+SELECT titlos, idryma INTO d_titlos, d_idryma FROM degree
+WHERE titlos = OLD.titlos AND idryma = OLD.idryma;
+SELECT active_admin.username INTO active_admin FROM active_admin LIMIT 1;
+SET event = CONCAT('The degree with title ', d_titlos, 'and idryma ', d_idryma, ' has just been deleted by the administrator ', active_admin);
+INSERT INTO administrator_log VALUES (active_admin, NOW(), event);
 END$
 DELIMITER;
 
@@ -232,35 +249,44 @@ CREATE TRIGGER user_insert AFTER INSERT ON user
 FOR EACH ROW 
 BEGIN 
 DECLARE t_username VARCHAR(30);
-DECLARE event TEXT;
-SELECT NEW.username INTO t_username FROM user;
-SET event = CONCAT('The user with username ', t_username, ' has just been inserted by the administrator ', active_admin.username);
-INSERT INTO administrator_log VALUES (active_admin.username, NOW(), event);
+DECLARE active_admin VARCHAR(30);
+DECLARE event TEXT(256);
+SELECT username INTO t_username FROM user
+WHERE username = NEW.username;
+SELECT active_admin.username INTO active_admin FROM active_admin LIMIT 1;
+SET event = CONCAT('The user with username ', t_username, ' has just been inserted by the administrator ', active_admin);
+INSERT INTO administrator_log VALUES (active_admin, NOW(), event);
 END$
 DELIMITER;
 
 DELIMITER $
 DROP TRIGGER IF EXISTS user_update$
-CREATE TRIGGER user_update AFTER UPDATE ON user 
+CREATE TRIGGER user_update BEFORE UPDATE ON user 
 FOR EACH ROW 
 BEGIN 
 DECLARE t_username VARCHAR(30);
-DECLARE event TEXT;
-SELECT NEW.username INTO t_username FROM user;
-SET event = CONCAT('The user with username ', t_username, ' has just been updated by the administrator ', active_admin.username);
-INSERT INTO administrator_log VALUES (active_admin.username, NOW(), event);
+DECLARE active_admin VARCHAR(30);
+DECLARE event TEXT(256);
+SELECT username INTO t_username FROM user
+WHERE username = OLD.username;
+SELECT active_admin.username INTO active_admin FROM active_admin LIMIT 1;
+SET event = CONCAT('The user with username ', t_username, ' has just been updated by the administrator ', active_admin);
+INSERT INTO administrator_log VALUES (active_admin, NOW(), event);
 END$
 DELIMITER;
 
 DELIMITER $
 DROP TRIGGER IF EXISTS user_delete$
-CREATE TRIGGER user_delete AFTER DELETE ON user 
+CREATE TRIGGER user_delete BEFORE DELETE ON user 
 FOR EACH ROW 
 BEGIN
 DECLARE t_username VARCHAR(30);
-DECLARE event TEXT;
-SELECT OLD.username INTO t_username FROM user; 
-SET event = CONCAT('The user with username ', t_username, ' has just been deleted by the administrator ', active_admin.username);
-INSERT INTO administrator_log VALUES (active_admin.username, NOW(), event);
+DECLARE active_admin VARCHAR(30);
+DECLARE event TEXT(256);
+SELECT username INTO t_username FROM user
+WHERE username = OLD.username;
+SELECT active_admin.username INTO active_admin FROM active_admin LIMIT 1; 
+SET event = CONCAT('The user with username ', t_username, ' has just been deleted by the administrator ', active_admin);
+INSERT INTO administrator_log VALUES (active_admin, NOW(), event);
 END$
 DELIMITER ;
