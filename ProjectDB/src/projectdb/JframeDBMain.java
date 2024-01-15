@@ -272,32 +272,7 @@ public class JframeDBMain extends javax.swing.JFrame {
                 // Create and run the delete MySQL command
                 String deleteQuery = "DELETE FROM " + selectedTableName + " WHERE " + whereClause.toString();
                 Statement statement = ConnectionDB.connection.createStatement();
-                int rowsAffected = statement.executeUpdate(deleteQuery);
-
-                // Check if deletion was successful
-                if (rowsAffected > 0) {
-                    // Remove the row from the table
-                    for (int i = 0; i < model.getRowCount(); i++) {
-                        boolean match = true;
-
-                        // Check if all values in the stored map match the current row
-                        for (Map.Entry<String, Object> entry : selectedRowData.entrySet()) {
-                            String columnName = entry.getKey();
-                            Object storedValue = entry.getValue();
-                            Object rowValue = model.getValueAt(i, model.findColumn(columnName));
-
-                            if (!storedValue.equals(rowValue)) {
-                                match = false;
-                                break;
-                            }
-                        }
-
-                        // If all values match, remove the row
-                        if (match) {
-                            model.removeRow(i);
-                        }
-                    }
-                }
+                statement.executeUpdate(deleteQuery);
             }
         } catch (SQLException e) {
             e.printStackTrace();
