@@ -58,11 +58,7 @@ public class JframeDB extends javax.swing.JFrame {
 
         username_field.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         username_field.setText("");
-        username_field.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                username_fieldActionPerformed(evt);
-            }
-        });
+        
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -174,11 +170,6 @@ public class JframeDB extends javax.swing.JFrame {
            e.printStackTrace();
         }
     }//GEN-LAST:event_login_buttonActionPerformed
-    
-    //DELETE
-    private void username_fieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username_fieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_username_fieldActionPerformed
 
     // Stating that the user logged in is the active admin
     private void insertIntoActiveAdmin(String username) {
