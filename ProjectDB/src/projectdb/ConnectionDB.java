@@ -6,7 +6,7 @@ public class ConnectionDB {
 
     private static final String DB_URL = "jdbc:mysql://localhost:3306/etaireia_aksiologisis";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "Matsaniarakos9";
+    private static final String PASSWORD = "556782340";
     public static Connection connection;
 
     // Establish a database connection
