@@ -4,6 +4,7 @@ import java.sql.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.*;
+
 public class JframeDBMain extends javax.swing.JFrame {
 
     public JframeDBMain() {
@@ -17,14 +18,13 @@ public class JframeDBMain extends javax.swing.JFrame {
                 cleanup(evt);
             }
         });
+        
         // Button settings initialization
         insert_button.setEnabled(false);
         update_button.setEnabled(false);
         delete_button.setEnabled(false);
         insert_label.setVisible(false);
-        //text_data.setVisible(false);
         text_data.setEnabled(false);
-        //update_data.setVisible(false);
         update_data.setEnabled(false);
     }
     
@@ -55,15 +55,7 @@ public class JframeDBMain extends javax.swing.JFrame {
 
         table_list.setBackground(new java.awt.Color(204, 204, 204));
         table_list.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        table_list.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                table_listAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
+
         table_list.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 table_listValueChanged(evt);
@@ -203,11 +195,6 @@ public class JframeDBMain extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_logout_buttonActionPerformed
 
-    // DELETE
-    private void table_listAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_table_listAncestorAdded
-       
-    }//GEN-LAST:event_table_listAncestorAdded
-
     // Action for when a table name from the list is clicked
     private void table_listValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_table_listValueChanged
     // Get the name of the table clicked on
@@ -245,9 +232,6 @@ public class JframeDBMain extends javax.swing.JFrame {
     // Action for the delete button
     private void delete_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_buttonActionPerformed
         try {
-            
-            // Createa a temporary table model
-            DefaultTableModel model = (DefaultTableModel) main_table.getModel();
 
             // Check if there is a selected row
             if (!selectedRowData.isEmpty()) {
@@ -282,7 +266,6 @@ public class JframeDBMain extends javax.swing.JFrame {
     // Action for the add button
     private void insert_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insert_buttonActionPerformed
         insert_label.setVisible(true);
-        //update_data.setVisible(false);
         update_data.setEnabled(false);
         text_data.setVisible(true);
         text_data.setEnabled(true);
@@ -291,7 +274,6 @@ public class JframeDBMain extends javax.swing.JFrame {
     // Action for the update button
     private void update_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_buttonActionPerformed
         insert_label.setVisible(true);
-        //text_data.setVisible(false);
         text_data.setEnabled(false);
         update_data.setVisible(true);
         update_data.setEnabled(true);
